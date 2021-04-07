@@ -9,33 +9,26 @@ var app = new Vue({
 
     },
 
-    // funzione per inserire l'input in una variabile che andrà concatenata alla url della richiesta (?)
+    methods: {
 
-    // methods: {
-    //     searchMovie: function() {
-    // 
-    //         this.userQuery = 
-    //     }
-    // },
-
-
-    mounted() {  
-        const self = this;
- 
+        searchMovie() {
+            const self = this;
             axios 
-                .get('https://api.themoviedb.org/3/movie/550?api_key=68f51a66076d768b3ce843cf630b46b5')
+                .get('https://api.themoviedb.org/3/search/movie', {
+                    params: {
+                        api_key: "68f51a66076d768b3ce843cf630b46b5",
+                        query: this.userQuery
+                    }
+                })
 
                 .then(function(result) {
                     const movies = result.data;
-                    console.log(result.data.title);
-                    console.log(movies.original_title);
+                    //console.log(result.data.results);
+                    self.movies = result.data.results;
+                    console.log(self.movies);
+                });
+        }
 
-                    self.movies = movies;       
-                    
-        
-        });      
-
-    }, 
-
+    }
 
 });
