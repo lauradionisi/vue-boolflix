@@ -5,14 +5,19 @@ var app = new Vue({
     el: "#app",
     data: {
         movies: [],
-        userQuery: ''
-
+        voteAverage: [],
+        stars: [],
+        userQuery: '',
+        countryFlags: []
     },
 
     methods: {
+        
 
         searchMovie() {
-            const self = this;
+       
+
+            
             axios 
                 .get('https://api.themoviedb.org/3/search/movie', {
                     params: {
@@ -21,14 +26,25 @@ var app = new Vue({
                     }
                 })
 
-                .then(function(result) {
-                    const movies = result.data;
-                    //console.log(result.data.results);
-                    self.movies = result.data.results;
-                    console.log(self.movies);
-                });
+                .then(result => {
+                    this.movies = result.data.results;
+                    this.movies.forEach(element => {
+                        element.vote_average = Math.ceil((element.vote_average * 5) / 10);
+                    });
+                    
+                })
+
+               
+
+        },
+
+    
+
+        getStar() {
+            this.voteAverage = result.data.results.vote_average;        
         }
 
+       
     }
 
 });

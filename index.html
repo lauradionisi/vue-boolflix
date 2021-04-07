@@ -8,6 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="css/style.css">
     <title>BOOLFIX</title>
 </head>
@@ -23,11 +24,15 @@
             <div class="movies-container">
                 <div v-for="movie in movies">                 
                     <ul>
-                        <li class="movie">
-                          <h2>{{ movie.title }}</h2>
-                          <h2>Original title: {{ movie.original_title }}</h2>
-                          <h3>Language: {{ movie.original_language }}</h3>
-                          <h3>Vote: {{ movie.vote_count }}</h3>
+                        <li class="movie" >
+                          <h1>{{ movie.title }}</h1>
+                          <h2> {{ movie.original_title }}</h2>
+                          <h3> {{ movie.original_language }}</h3>
+                          <h3>  
+                              <i class="fas fa-star" v-for="icon in movie.vote_average" v-if="5 - movie.vote_average"></i>
+                              <i v-else class="far fa-star"></i>
+
+                         </h3>
                         </li>
                     </ul>
                 </div>
