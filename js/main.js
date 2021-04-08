@@ -5,43 +5,67 @@ var app = new Vue({
     el: "#app",
     data: {
         movies: [],
-        voteAverage: [],
-        stars: [],
+        voteAverage: [],      
         userQuery: '',
-        countryFlags: []
+        countryFlags: ['en', 'es', 'fr', 'it', 'ja' ]
     },
 
     methods: {
         
 
-        searchMovie() {
-       
+        searchMovieTv() {
+         
+          const self = this;
 
-            
+          self.results = [];
+
             axios 
                 .get('https://api.themoviedb.org/3/search/movie', {
                     params: {
                         api_key: "68f51a66076d768b3ce843cf630b46b5",
-                        query: this.userQuery
+                        query: self.userQuery,
+                        language: 'it-IT'
                     }
                 })
 
                 .then(result => {
-                    this.movies = result.data.results;
-                    this.movies.forEach(element => {
-                        element.vote_average = Math.ceil((element.vote_average * 5) / 10);
-                    });
+                    const movies = result.data.results; 
                     
+                    self.movies = self.results.concat(movies);
+                });
+
+                // chiamata serie tv
+
+                axios 
+                .get('https://api.themoviedb.org/3/search/tv', {
+                    params: {
+                        api_key: "68f51a66076d768b3ce843cf630b46b5",
+                        query: self.userQuery,
+                        language: 'it-IT'
+                    }
+                })
+
+                .then(result => {
+                    const moviesTv = result.data.results; 
+                    self.moviesTv = self.results.concat(moviesTv);
                 })
 
                
 
         },
 
-    
+        getStar(star) {
+            return parseInt(star / 2);       
+        },
+        
+        // utilizzo del template literal per la riceerca delle immagini e del poster
 
-        getStar() {
-            this.voteAverage = result.data.results.vote_average;        
+        getFlag(lang) {
+            return `img/${lang}.png`
+        },
+
+        getPoster(poster) {
+            return `https://image.tmdb.org/t/p/w185/${poster}`;
         }
 
        

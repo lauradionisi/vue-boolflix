@@ -19,20 +19,24 @@
                 <div class="logo">
                     
                 </div>
-                <input type="text" placeholder="Cerca un film" v-model='userQuery' @keypress.enter="searchMovie">
+                <input type="text" placeholder="Cerca un film" v-model='userQuery' @keypress.enter="searchMovieTv">
+                <button @click="searchMovieTv">Cerca</button>
             </div>
             <div class="movies-container">
-                <div v-for="movie in movies">                 
+                <div v-for="movie in movies">  
+                                  
                     <ul>
                         <li class="movie" >
+                          <img class="poster" v-if="movie.poster_path" :src="getPoster(movie.poster_path)" alt="">
                           <h1>{{ movie.title }}</h1>
                           <h2> {{ movie.original_title }}</h2>
                           <h3> {{ movie.original_language }}</h3>
                           <h3>  
-                              <i class="fas fa-star" v-for="icon in movie.vote_average" v-if="5 - movie.vote_average"></i>
-                              <i v-else class="far fa-star"></i>
-
+                              <i class="fas fa-star" v-for="icon in getStar(movie.vote_average)"></i>
+                              <i v-for="icon in (5- getStar(movie.vote_average))" class="far fa-star"></i>
                          </h3>
+                         <img class="flag" v-if="countryFlags.includes(movie.original_language)" :src="getFlag(movie.original_language)" alt="">
+                         <span v-else>{{ movie.original_language}}</span>
                         </li>
                     </ul>
                 </div>

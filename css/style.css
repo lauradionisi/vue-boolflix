@@ -30,5 +30,11 @@ li.movie {
     list-style: none;
 }
 
+img.flag {
+    width: 70%;
+    margin-top: 15px;
+}
 
-
+img.poster {
+    width: 70%;
+}
